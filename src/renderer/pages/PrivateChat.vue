@@ -13,7 +13,8 @@
 </template>
 
 <script>
-const { ipcRenderer } = require('electron')
+import { sendPrivateMessage, privateMessageListener } from '../services/message-service'
+// const { ipcRenderer } = require('electron')
 
 export default {
   data () {
@@ -25,14 +26,17 @@ export default {
   methods: {
     sendMessage () {
       const recipient = 'gihook@404.city'
-      ipcRenderer.send('send-message', { message: this.newMessage, to: recipient })
+      sendPrivateMessage({ message: this.newMessage, to: recipient })
       this.messages = [...this.messages, { from: 'test-gihhok@404.city', message: this.newMessage }]
     }
   },
   created () {
-    ipcRenderer.on('receive-message', (sender, message) => {
+    privateMessageListener((message) => {
       this.messages = [...this.messages, message]
     })
+    // ipcRenderer.on('receive-message', (sender, message) => {
+    //   this.messages = [...this.messages, message]
+    // })
   }
 }
 </script>
