@@ -24,9 +24,9 @@ export default {
   },
   methods: {
     sendMessage () {
-      const currentUser = 'test-gihhok@404.city'
-      ipcRenderer.send('send-message', { message: this.newMessage, to: currentUser })
-      this.messages = [...this.messages, { from: currentUser, message: this.newMessage }]
+      const recipient = 'gihook@404.city'
+      ipcRenderer.send('send-message', { message: this.newMessage, to: recipient })
+      this.messages = [...this.messages, { from: 'test-gihhok@404.city', message: this.newMessage }]
     }
   },
   created () {

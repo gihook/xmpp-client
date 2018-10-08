@@ -1,7 +1,7 @@
-const { ipcMain } = require('electron')
-const { Client } = require('@xmpp/client')
-const xml = require('@xmpp/xml')
-const colors = require('colors/safe')
+import { ipcMain } from 'electron'
+import { Client } from '@xmpp/client'
+import xml from '@xmpp/xml'
+import colors from 'colors/safe'
 
 let client = null
 
@@ -37,12 +37,6 @@ const loginToXmpp = (credentials, mainWindow) => {
   client.on('online', jid => {
     console.log(colors.green('online as', jid.toString()))
     client.send(xml('presence'))
-
-    client.send(
-      xml('message', { to: 'gihook@404.city', type: 'chat' },
-        xml('body', {}, 'Hello, I just logged in!')
-      )
-    )
   })
 
   client.on('stanza', stanza => {

@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
+import { mainFunction } from './app'
 
 /**
  * Set `__static` path to static files in production
@@ -31,8 +32,7 @@ function createWindow () {
     mainWindow = null
   })
 
-  const mainApp = require('./app').default.main
-  mainApp(mainWindow)
+  mainFunction(mainWindow)
 }
 
 app.on('ready', createWindow)

@@ -29,10 +29,9 @@ export default {
   name: 'LandingPage',
   data () {
     return {
-      domain: '',
-      username: '',
-      password: '',
-      message: ''
+      domain: '404.city',
+      username: 'test-gihhok@404.city',
+      password: 'Impeo123'
     }
   },
   methods: {
