@@ -23,7 +23,7 @@
 </template>
 
 <script>
-const { ipcRenderer } = require('electron')
+import { ipcRenderer } from 'electron'
 
 export default {
   name: 'LandingPage',
@@ -38,7 +38,7 @@ export default {
     registerUser () {
       const data = { domain: this.domain, username: this.username, password: this.password }
       ipcRenderer.send('register', data)
-      this.$router.push('/private-chat')
+      this.$router.push('/menu')
     }
   }
 }
