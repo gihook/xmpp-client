@@ -56,6 +56,4 @@ const loginToXmpp = (credentials, mainWindow) => {
   return client
 }
 
-export default {
-  main: mainFunction
-}
+export const main = mainFunction

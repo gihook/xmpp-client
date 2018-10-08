@@ -1,7 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-import { mainFunction } from './app'
+import { main } from './app'
 
 /**
  * Set `__static` path to static files in production
@@ -32,7 +32,7 @@ function createWindow () {
     mainWindow = null
   })
 
-  mainFunction(mainWindow)
+  main(mainWindow)
 }
 
 app.on('ready', createWindow)
