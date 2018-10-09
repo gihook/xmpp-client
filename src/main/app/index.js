@@ -20,8 +20,9 @@ const mainFunction = function (mainWindow) {
   })
 
   ipcMain.on('search-chatrooms', (sender, data) => {
+    const server = data
     client.send(
-      xml('iq', { from: 'test-gihhok@404.city', to: 'muc.xmpp.org', type: 'get', id: 'test-id-nikola' },
+      xml('iq', { to: server, type: 'get', id: 'test-id-nikola' },
         xml('query', { xmlns: 'http://jabber.org/protocol/disco#items' })
       )
     )

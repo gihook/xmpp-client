@@ -1,24 +1,24 @@
 <template>
   <div id="wrapper">
-    <main>
+    <md-card>
       <div class="left-side">
         <form @submit.prevent="registerUser">
-          <div class="form-item">
-            <label for="domain">Domain</label>
-            <input type="text" name="domain" v-model="domain">
-          </div>
-          <div class="form-item">
-            <label for="username">Username</label>
-            <input type="text" name="username" v-model="username">
-          </div>
-          <div class="form-item">
-            <label for="password">Password</label>
-            <input type="password" name="password" v-model="password">
-          </div>
-          <button>Connect</button>
+          <md-field>
+            <label>Domain</label>
+            <md-input v-model="domain"></md-input>
+          </md-field>
+          <md-field>
+            <label>Username</label>
+            <md-input v-model="username"></md-input>
+          </md-field>
+          <md-field>
+            <label>Password</label>
+            <md-input type="password" v-model="password"></md-input>
+          </md-field>
+          <md-button type="submit" class="md-raised" :md-ripple="false">Connect</md-button>
         </form>
       </div>
-    </main>
+    </md-card>
   </div>
 </template>
 
@@ -49,17 +49,5 @@ form {
   margin: 0;
   padding: 10px;
   width: 100%;
-}
-
-.form-item {
-  width: 100%;
-  padding: 20px;
-  border: 1px solid black;
-  margin-bottom: 5px;
-}
-
-button {
-  width: 100%;
-  height: 50px;
 }
 </style>

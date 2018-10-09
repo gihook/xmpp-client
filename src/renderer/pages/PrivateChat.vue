@@ -1,20 +1,23 @@
 <template>
   <div class="container">
     <div class="message-list">
-      <ul>
-        <li v-for="(item, index) in messages" :key="index">{{ item.from }} {{ item.message }}</li>
-      </ul>
+      <md-list>
+        <md-list-item v-for="(item, index) in messages" :key="index">
+          <span class="md-list-item-text">{{ item.message }}</span>
+        </md-list-item> 
+      </md-list>
     </div>
     <form @submit.prevent="sendMessage" class="messaging-area">
-      <textarea name="message-area" cols="30" rows="10" v-model="newMessage"></textarea>
-      <button>Send</button>
+      <md-field>
+        <md-textarea v-model="newMessage"></md-textarea>
+      </md-field>
+      <md-button type="submit">Send</md-button>
     </form>
   </div>
 </template>
 
 <script>
 import { sendPrivateMessage, privateMessageListener } from '../services/message-service'
-// const { ipcRenderer } = require('electron')
 
 export default {
   data () {
@@ -39,24 +42,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .message-list {
+form {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+
+  &>textarea {
     width: 100%;
-    padding: 5px;
-    margin-bottom: 20px;
-    border: 2px solid black;
   }
 
-  form {
+  &>button {
     width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
-
-    &>textarea {
-      width: 100%;
-    }
-
-    &>button {
-      width: 100%;
-    }
   }
+}
+
+.md-list {
+  width: 520px;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid rgba(#000, .12);
+}
 </style>

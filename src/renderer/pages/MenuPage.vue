@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <button v-on:click="goToPrivateChat">Chat</button>
-    <button v-on:click="goToSearchPage">Search for chat rooms</button>
+    <md-button v-on:click="goToPrivateChat">Chat</md-button>
+    <md-button v-on:click="goToSearchPage">Search for chat rooms</md-button>
   </div>
 </template>
 
@@ -19,9 +19,5 @@ export default {
 </script>
 
 <style scoped>
-  button {
-    width: 100%;
-    height: 50px;
-  }
 </style>
 
