@@ -6,9 +6,11 @@
         <button>Search</button>
       </div>
     </form>
-    <ul>
-      <li v-for="(room, index) in rooms" :key="index">{{ room.name }} {{ room.address }}</li>
-    </ul>
+    <div class="rooms">
+      <ul>
+        <li v-for="(room, index) in rooms" :key="index">{{ room.name }} {{ room.address }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -57,6 +59,6 @@ input {
 
 button {
   width: 100%;
-  height: 50px;
+  height: 20;
 }
 </style>
