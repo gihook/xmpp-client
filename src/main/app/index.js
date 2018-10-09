@@ -27,6 +27,15 @@ const mainFunction = function (mainWindow) {
       )
     )
   })
+
+  ipcMain.on('join-room', (sender, data) => {
+    console.log('sending presence...')
+    const { address } = data
+    const xmlStanza = xml('presence', { to: address + '/test-gihhok1', id: 'room-id-nikola' })
+
+    client.send(xmlStanza)
+    console.log(xmlStanza)
+  })
 }
 
 const loginToXmpp = (credentials, mainWindow) => {
@@ -45,13 +54,14 @@ const loginToXmpp = (credentials, mainWindow) => {
 
   client.on('online', jid => {
     console.log(colors.green('online as', jid.toString()))
-    client.send(xml('presence'))
+    client.send(xml('presence', { from: jid.toString() }), xml('show', {}, 'chat'))
   })
 
   client.on('stanza', stanza => {
     console.log(colors.yellow(stanza.toString()))
 
     if (stanza.is('message')) {
+      if (stanza.attrs.type !== 'chat') return
       const from = stanza.attrs.from.split('/')[0]
       const message = stanza.getChild('body').text()
       mainWindow.webContents.send('receive-message', { from, message })
@@ -61,7 +71,6 @@ const loginToXmpp = (credentials, mainWindow) => {
       const rooms = stanza.children[0].children.map(x => {
         return { address: x.attrs['jid'], name: x.attrs['name'] }
       })
-      console.log(colors.green(JSON.stringify(rooms)))
 
       mainWindow.webContents.send('search-chat-rooms', rooms)
     }

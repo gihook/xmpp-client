@@ -8,7 +8,7 @@
     </form>
     <div class="rooms">
       <md-list>
-        <md-list-item v-for="(room, index) in rooms" :key="index">
+        <md-list-item v-for="(room, index) in rooms" :key="index" @click="joinRoom(room)">
           <span class="md-list-item-text">{{ room.name }} {{ room.address }}</span>
         </md-list-item> 
       </md-list>
@@ -17,7 +17,11 @@
 </template>
 
 <script>
-import { searchForChatRooms, searchChatRoomsListener } from '../services/message-service'
+import {
+  searchForChatRooms,
+  searchChatRoomsListener,
+  joinRoom
+} from '../services/message-service'
 
 export default {
   name: 'SearchPage',
@@ -31,6 +35,10 @@ export default {
     searchForChatRooms () {
       this.rooms = []
       searchForChatRooms(this.server)
+    },
+    joinRoom (room) {
+      console.log(room)
+      joinRoom(room)
     }
   },
   created () {

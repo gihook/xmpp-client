@@ -19,3 +19,7 @@ export const searchChatRoomsListener = (listener) => {
     listener(messages)
   })
 }
+
+export const joinRoom = (room) => {
+  ipcRenderer.send('join-room', room)
+}
