@@ -18,6 +18,14 @@ const mainFunction = function (mainWindow) {
       )
     )
   })
+
+  ipcMain.on('search-chatrooms', (sender, data) => {
+    client.send(
+      xml('iq', { from: 'test-gihhok@404.city', to: 'muc.xmpp.org', type: 'get', id: 'test-id-nikola' },
+        xml('query', { xmlns: 'http://jabber.org/protocol/disco#items' })
+      )
+    )
+  })
 }
 
 const loginToXmpp = (credentials, mainWindow) => {
@@ -42,11 +50,20 @@ const loginToXmpp = (credentials, mainWindow) => {
   client.on('stanza', stanza => {
     console.log(colors.yellow(stanza.toString()))
 
-    if (!stanza.is('message')) return
+    if (stanza.is('message')) {
+      const from = stanza.attrs.from.split('/')[0]
+      const message = stanza.getChild('body').text()
+      mainWindow.webContents.send('receive-message', { from, message })
+    }
 
-    const from = stanza.attrs.from.split('/')[0]
-    const message = stanza.getChild('body').text()
-    mainWindow.webContents.send('receive-message', { from, message })
+    if (stanza.is('iq') && stanza.attrs.id === 'test-id-nikola') {
+      const rooms = stanza.children[0].children.map(x => {
+        return { address: x.attrs['jid'], name: x.attrs['name'] }
+      })
+      console.log(colors.green(JSON.stringify(rooms)))
+
+      mainWindow.webContents.send('search-chat-rooms', rooms)
+    }
   })
 
   client.handle('authenticate', authenticate => {

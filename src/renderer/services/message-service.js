@@ -13,3 +13,9 @@ export const privateMessageListener = (listener) => {
     listener(data)
   })
 }
+
+export const searchChatRoomsListener = (listener) => {
+  ipcRenderer.on('search-chat-rooms', (_, messages) => {
+    listener(messages)
+  })
+}

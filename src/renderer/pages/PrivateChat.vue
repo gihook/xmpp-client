@@ -34,9 +34,6 @@ export default {
     privateMessageListener((message) => {
       this.messages = [...this.messages, message]
     })
-    // ipcRenderer.on('receive-message', (sender, message) => {
-    //   this.messages = [...this.messages, message]
-    // })
   }
 }
 </script>

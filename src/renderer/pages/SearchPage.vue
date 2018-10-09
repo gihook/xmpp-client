@@ -6,10 +6,15 @@
         <button>Search</button>
       </div>
     </form>
+    <ul>
+      <li v-for="(room, index) in rooms" :key="index">{{ room.name }} {{ room.address }}</li>
+    </ul>
   </div>
 </template>
 
 <script>
+import { searchForChatRooms, searchChatRoomsListener } from '../services/message-service'
+
 export default {
   name: 'SearchPage',
   data () {
@@ -21,7 +26,14 @@ export default {
   methods: {
     searchForChatRooms () {
       this.rooms = []
+      searchForChatRooms(this.server)
     }
+  },
+  created () {
+    searchChatRoomsListener((rooms) => {
+      console.log({ rooms })
+      this.rooms = rooms
+    })
   }
 }
 </script>
