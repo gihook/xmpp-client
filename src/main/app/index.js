@@ -63,6 +63,7 @@ const loginToXmpp = (credentials, mainWindow) => {
     if (stanza.is('message')) {
       if (stanza.attrs.type !== 'chat') return
       const from = stanza.attrs.from.split('/')[0]
+      if (!stanza.getChild('body')) return
       const message = stanza.getChild('body').text()
       mainWindow.webContents.send('receive-message', { from, message })
     }
