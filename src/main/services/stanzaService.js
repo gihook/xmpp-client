@@ -14,9 +14,19 @@ const privateChatHandler = (stanza) => {
   return { from, message }
 }
 
+const searchRoomsHandler = (stanza) => {
+  const rooms = stanza.children[0].children.map(x => {
+    return { address: x.attrs['jid'], name: x.attrs['name'] }
+  })
+
+  return rooms
+}
+
 export const handlerFactory = (stanzaCode) => {
   const split = stanzaCode.split(':')
-  const type = split[0]
+  const stanzaType = split[0]
 
-  if (type === 'message') return privateChatHandler
+  // This is good enough for now; TODO: Make this more functional
+  if (stanzaType === 'message') return privateChatHandler
+  if (stanzaType === 'iq') return searchRoomsHandler
 }

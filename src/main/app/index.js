@@ -10,32 +10,20 @@ let eventKeys = []
 const mainFunction = function (mainWindow) {
   ipcMain.on('registerClient', (_, credentials) => {
     client = createXmppClient(credentials, (stanza) => {
-      // console.log(colors.yellow(stanza.toString()))
-      // console.log(JSON.stringify(stanza, null, 2))
-      console.log(stanza.toString())
       const stanzaCode = getStanzaCode(stanza)
       console.log(colors.cyan(stanzaCode))
+      console.log(stanza.toString())
+      console.log(eventKeys)
 
       if (eventKeys.indexOf(stanzaCode) === -1) return
 
       const stanzaHandler = handlerFactory(stanzaCode)
-      mainWindow.webContents.send(stanzaCode, stanzaHandler(stanza))
-      // if (stanza.is('message')) {
-      //   if (stanza.attrs.type !== 'chat') return
-      //   const from = stanza.attrs.from.split('/')[0]
-      //   const body = stanza.getChild('body')
-      //   if (!body) return
-      //   const message = body.text()
-      //   mainWindow.webContents.send('receive-message', { from, message })
-      // }
+      const data = stanzaHandler(stanza)
 
-      // if (stanza.is('iq') && stanza.attrs.id === 'test-id-nikola') {
-      //   const rooms = stanza.children[0].children.map(x => {
-      //     return { address: x.attrs['jid'], name: x.attrs['name'] }
-      //   })
+      // TODO: Too ugly!!!
+      if (!data) return
 
-      //   mainWindow.webContents.send('search-chat-rooms', rooms)
-      // }
+      mainWindow.webContents.send(stanzaCode, data)
     })
   })
 
@@ -55,7 +43,7 @@ const mainFunction = function (mainWindow) {
   ipcMain.on('search-chatrooms', (_, data) => {
     const server = data
     client.send(
-      xml('iq', { to: server, type: 'get', id: 'test-id-nikola' },
+      xml('iq', { to: server, type: 'get', id: 'search-rooms' },
         xml('query', { xmlns: 'http://jabber.org/protocol/disco#items' })
       )
     )

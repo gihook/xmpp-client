@@ -35,6 +35,10 @@ export default {
     searchForChatRooms () {
       this.rooms = []
       searchForChatRooms(this.server)
+      searchChatRoomsListener(this.server, (rooms) => {
+        console.log(rooms)
+        this.rooms = rooms
+      })
     },
     joinRoom (room) {
       console.log(room)
@@ -42,9 +46,6 @@ export default {
     }
   },
   created () {
-    searchChatRoomsListener((rooms) => {
-      this.rooms = rooms
-    })
   }
 }
 </script>

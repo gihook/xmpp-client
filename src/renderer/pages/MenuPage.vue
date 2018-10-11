@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
+import { registerEventKey } from '../services/message-service'
 
 export default {
   data () {
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     goToPrivateChat () {
-      ipcRenderer.send('registerEventKey', `message:chat:${this.friendJid}`)
+      registerEventKey(`message:chat:${this.friendJid}`)
       this.$router.push('/private-chat')
     },
     goToSearchPage () {
