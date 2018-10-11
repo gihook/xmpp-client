@@ -36,8 +36,8 @@ export default {
   },
   methods: {
     registerUser () {
-      const data = { domain: this.domain, username: this.username, password: this.password }
-      ipcRenderer.send('register', data)
+      const credentials = { domain: this.domain, username: this.username, password: this.password }
+      ipcRenderer.send('registerClient', credentials)
       this.$router.push('/menu')
     }
   }

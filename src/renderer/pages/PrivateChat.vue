@@ -34,7 +34,7 @@ export default {
     }
   },
   created () {
-    privateMessageListener((message) => {
+    privateMessageListener('gihook@404.city', (message) => {
       this.messages = [...this.messages, message]
     })
   }

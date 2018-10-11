@@ -8,8 +8,9 @@ export const searchForChatRooms = (server) => {
   ipcRenderer.send('search-chatrooms', server)
 }
 
-export const privateMessageListener = (listener) => {
-  ipcRenderer.on('receive-message', (_, data) => {
+export const privateMessageListener = (jid, listener) => {
+  const eventKey = `message:chat:${jid}`
+  ipcRenderer.on(eventKey, (_, data) => {
     listener(data)
   })
 }

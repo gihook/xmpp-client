@@ -1,8 +1,7 @@
 import { Client, xml } from '@xmpp/client'
 import colors from 'colors/safe'
-import { getStanzaCode } from './stanzaService'
 
-export const createXmppClient = (credentials, mainWindow) => {
+export const createXmppClient = (credentials, stancaHandler) => {
   const client = new Client()
   const { domain, username, password } = credentials
 
@@ -12,7 +11,7 @@ export const createXmppClient = (credentials, mainWindow) => {
     console.error(colors.red(err.toString()))
   })
 
-  client.on('status', (status, value) => {
+  client.on('status', (_, value) => {
     console.log(colors.blue(value ? value.toString() : ''))
   })
 
@@ -22,26 +21,7 @@ export const createXmppClient = (credentials, mainWindow) => {
   })
 
   client.on('stanza', stanza => {
-    // console.log(colors.yellow(stanza.toString()))
-    // console.log(JSON.stringify(stanza, null, 2))
-    console.log(colors.cyan(getStanzaCode(stanza)))
-
-    if (stanza.is('message')) {
-      if (stanza.attrs.type !== 'chat') return
-      const from = stanza.attrs.from.split('/')[0]
-      const body = stanza.getChild('body')
-      if (!body) return
-      const message = body.text()
-      mainWindow.webContents.send('receive-message', { from, message })
-    }
-
-    if (stanza.is('iq') && stanza.attrs.id === 'test-id-nikola') {
-      const rooms = stanza.children[0].children.map(x => {
-        return { address: x.attrs['jid'], name: x.attrs['name'] }
-      })
-
-      mainWindow.webContents.send('search-chat-rooms', rooms)
-    }
+    stancaHandler(stanza)
   })
 
   client.handle('authenticate', authenticate => {
