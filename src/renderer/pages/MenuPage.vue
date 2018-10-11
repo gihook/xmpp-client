@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <input type="text" v-model="friendJid">
+    <md-field>
+      <md-input v-model="friendJid"></md-input>
+    </md-field>
     <md-button v-on:click="goToPrivateChat">Chat</md-button>
     <md-button v-on:click="goToSearchPage">Search for chat rooms</md-button>
   </div>

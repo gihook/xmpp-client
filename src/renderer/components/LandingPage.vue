@@ -1,23 +1,21 @@
 <template>
   <div id="wrapper">
     <md-card>
-      <div class="left-side">
-        <form @submit.prevent="registerUser">
-          <md-field>
-            <label>Domain</label>
-            <md-input v-model="domain"></md-input>
-          </md-field>
-          <md-field>
-            <label>Username</label>
-            <md-input v-model="username"></md-input>
-          </md-field>
-          <md-field>
-            <label>Password</label>
-            <md-input type="password" v-model="password"></md-input>
-          </md-field>
-          <md-button type="submit" class="md-raised" :md-ripple="false">Connect</md-button>
-        </form>
-      </div>
+      <form @submit.prevent="registerUser">
+        <md-field>
+          <label>Domain</label>
+          <md-input v-model="domain"></md-input>
+        </md-field>
+        <md-field>
+          <label>Username</label>
+          <md-input v-model="username"></md-input>
+        </md-field>
+        <md-field>
+          <label>Password</label>
+          <md-input type="password" v-model="password"></md-input>
+        </md-field>
+        <md-button type="submit" class="md-raised" :md-ripple="false">Connect</md-button>
+      </form>
     </md-card>
   </div>
 </template>
@@ -45,6 +43,10 @@ export default {
 </script>
 
 <style scoped>
+.md-card {
+  margin: 20px;
+}
+
 form {
   margin: 0;
   padding: 10px;
