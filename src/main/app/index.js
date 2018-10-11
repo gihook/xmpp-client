@@ -12,13 +12,12 @@ const mainFunction = function (mainWindow) {
     client = createXmppClient(credentials, (stanza) => {
       // console.log(colors.yellow(stanza.toString()))
       // console.log(JSON.stringify(stanza, null, 2))
+      console.log(stanza.toString())
       const stanzaCode = getStanzaCode(stanza)
       console.log(colors.cyan(stanzaCode))
 
       if (eventKeys.indexOf(stanzaCode) === -1) return
 
-      console.log('passed', stanzaCode)
-      console.log(eventKeys)
       const stanzaHandler = handlerFactory(stanzaCode)
       mainWindow.webContents.send(stanzaCode, stanzaHandler(stanza))
       // if (stanza.is('message')) {
@@ -41,9 +40,7 @@ const mainFunction = function (mainWindow) {
   })
 
   ipcMain.on('registerEventKey', (_, eventKey) => {
-    console.log(colors.bgYellow(eventKey))
     eventKeys = [...eventKeys, eventKey]
-    console.log(colors.bgYellow(eventKeys))
   })
 
   ipcMain.on('send-message', (_, data) => {

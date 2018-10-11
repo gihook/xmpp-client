@@ -1,7 +1,7 @@
 import { Client, xml } from '@xmpp/client'
 import colors from 'colors/safe'
 
-export const createXmppClient = (credentials, stancaHandler) => {
+export const createXmppClient = (credentials, stanzaHandler) => {
   const client = new Client()
   const { domain, username, password } = credentials
 
@@ -21,7 +21,7 @@ export const createXmppClient = (credentials, stancaHandler) => {
   })
 
   client.on('stanza', stanza => {
-    stancaHandler(stanza)
+    stanzaHandler(stanza)
   })
 
   client.handle('authenticate', authenticate => {
