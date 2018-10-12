@@ -20,7 +20,7 @@ export default {
   methods: {
     goToPrivateChat () {
       registerEventKey(`message:chat:${this.friendJid}`)
-      this.$router.push('/private-chat')
+      this.$router.push(`/private-chat/${this.friendJid}`)
     },
     goToSearchPage () {
       this.$router.push('/search')

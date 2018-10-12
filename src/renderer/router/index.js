@@ -23,7 +23,7 @@ export default new Router({
       component: MenuPage
     },
     {
-      path: '/private-chat',
+      path: '/private-chat/:jid',
       name: 'private-chat',
       component: PrivateChat
     },

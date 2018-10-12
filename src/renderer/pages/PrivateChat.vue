@@ -23,18 +23,19 @@ export default {
   data () {
     return {
       newMessage: '',
-      messages: []
+      messages: [],
+      recipient: ''
     }
   },
   methods: {
     sendMessage () {
-      const recipient = 'gihook@404.city'
-      sendPrivateMessage({ message: this.newMessage, to: recipient })
+      sendPrivateMessage({ message: this.newMessage, to: this.recipient })
       this.messages = [...this.messages, { from: 'test-gihhok@404.city', message: this.newMessage }]
     }
   },
   created () {
-    privateMessageListener('gihook@404.city', (message) => {
+    this.recipient = this.$route.params.jid
+    privateMessageListener(this.recipient, (message) => {
       this.messages = [...this.messages, message]
     })
   }
