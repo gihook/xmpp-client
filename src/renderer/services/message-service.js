@@ -38,8 +38,13 @@ export const searchChatRoomsListener = (serverId, listener) => {
   })
 }
 
-export const joinRoom = (room) => {
+export const joinRoom = (room, callback) => {
   ipcRenderer.send('join-room', room)
+  const eventKey = `presence::${room.address}`
+  registerEventKey(eventKey)
+  ipcRenderer.on(eventKey, (_, user) => {
+    callback(user)
+  })
 }
 
 export const registerEventKey = (eventKey) => {

@@ -32,6 +32,19 @@ const groupChatHandler = (stanza) => {
   return { sender, message: message ? message.text() : undefined, subject: subject ? subject.text() : undefined }
 }
 
+const groupChatPresenceHandler = (stanza) => {
+  const from = stanza.attrs.from.split('/')[1]
+  const child = stanza.getChildren('x')[1]
+  if (!child) return
+
+  const data = { user: child.getChild('item').attrs.jid, status: child.getChild('status') ? child.getChild('status').attrs.code : undefined, from }
+  console.log('--------')
+  console.log(data)
+  console.log('--------')
+
+  return data
+}
+
 export const handlerFactory = (stanzaCode) => {
   const split = stanzaCode.split(':')
   const stanzaType = split[0]
@@ -41,4 +54,5 @@ export const handlerFactory = (stanzaCode) => {
   if (stanzaType === 'message' && type === 'groupchat') return groupChatHandler
   if (stanzaType === 'message') return privateChatHandler
   if (stanzaType === 'iq') return searchRoomsHandler
+  if (stanzaType === 'presence') return groupChatPresenceHandler
 }
