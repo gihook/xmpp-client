@@ -15,7 +15,7 @@ const mainFunction = function (mainWindow) {
       console.log(stanza.toString())
       console.log(eventKeys)
 
-      if (eventKeys.indexOf(stanzaCode) === -1) return
+      if (!eventKeys.includes(stanzaCode)) return
 
       const stanzaHandler = handlerFactory(stanzaCode)
       const data = stanzaHandler(stanza)

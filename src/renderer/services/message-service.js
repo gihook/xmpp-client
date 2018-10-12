@@ -31,7 +31,7 @@ export const joinRoom = (room) => {
 }
 
 export const registerEventKey = (eventKey) => {
-  if (registratedEventKeys.indexOf(eventKey) !== -1) return
+  if (registratedEventKeys.includes(eventKey)) return
 
   registratedEventKeys.push(eventKey)
   ipcRenderer.send('registerEventKey', eventKey)
