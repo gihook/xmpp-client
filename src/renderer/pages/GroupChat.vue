@@ -3,7 +3,9 @@
     <h1>{{ subject }}</h1>
     <h2>{{ this.address }}</h2>
     <ul>
-      <li v-for="(item, index) in loggedUsers" :key="index">{{ item.from }} {{ item.status || 'no-status' }}</li>
+      <li v-for="(item, index) in loggedUsers" :key="index">
+        <span v-bind:class="{ active: item.status }">{{ item.from }} {{ item.status }}</span>
+      </li>
     </ul>
     <md-list>
       <md-list-item v-for="(item, index) in messages" :key="index">
@@ -42,7 +44,7 @@ export default {
     this.address = this.$route.params.jid
     const room = { address: this.address }
     joinRoom(room, (user) => {
-      this.loggedUsers = [this.loggedUsers, user]
+      this.loggedUsers = [...this.loggedUsers, user]
     })
     groupChatListener(this.address, (message) => {
       if (message.sender) {
@@ -57,6 +59,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.active {
+  color: green;
+}
 </style>
