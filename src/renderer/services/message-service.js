@@ -12,6 +12,14 @@ export const searchForChatRooms = (server) => {
   ipcRenderer.send('search-chatrooms', server)
 }
 
+export const groupChatListener = (jid, callback) => {
+  const eventKey = `message:groupchat:${jid}`
+  registerEventKey(eventKey)
+  ipcRenderer.on(eventKey, (_, message) => {
+    callback(message)
+  })
+}
+
 export const privateMessageListener = (jid, listener) => {
   const eventKey = `message:chat:${jid}`
   ipcRenderer.on(eventKey, (_, data) => {

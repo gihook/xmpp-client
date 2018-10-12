@@ -22,11 +22,23 @@ const searchRoomsHandler = (stanza) => {
   return rooms
 }
 
+const groupChatHandler = (stanza) => {
+  const { from } = stanza.attrs
+  const subject = stanza.getChild('subject')
+  const sender = from.split('/')[1]
+  const message = stanza.getChild('body')
+
+  // TODO: Too ugly, refactor
+  return { sender, message: message ? message.text() : undefined, subject: subject ? subject.text() : undefined }
+}
+
 export const handlerFactory = (stanzaCode) => {
   const split = stanzaCode.split(':')
   const stanzaType = split[0]
+  const type = split[1]
 
   // This is good enough for now; TODO: Make this more functional
+  if (stanzaType === 'message' && type === 'groupchat') return groupChatHandler
   if (stanzaType === 'message') return privateChatHandler
   if (stanzaType === 'iq') return searchRoomsHandler
 }

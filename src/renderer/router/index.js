@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import PrivateChat from '../pages/PrivateChat'
 import SearchPage from '../pages/SearchPage'
 import MenuPage from '../pages/MenuPage'
+import GroupChat from '../pages/GroupChat'
 
 Vue.use(Router)
 
@@ -31,6 +32,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: SearchPage
+    },
+    {
+      path: '/group-chat/:jid',
+      name: 'group-chat',
+      component: GroupChat
     }
   ]
 })

@@ -8,8 +8,10 @@
     </form>
     <div class="rooms">
       <md-list>
-        <md-list-item v-for="(room, index) in rooms" :key="index" @click="joinRoom(room)">
-          <span class="md-list-item-text">{{ room.name }} {{ room.address }}</span>
+        <md-list-item v-for="(room, index) in rooms" :key="index">
+          <router-link :to="{ name: 'group-chat', params: { jid: room.address} }">
+            <span class="md-list-item-text">{{ room.name }} {{ room.address }}</span>
+          </router-link>
         </md-list-item> 
       </md-list>
     </div>
@@ -19,8 +21,7 @@
 <script>
 import {
   searchForChatRooms,
-  searchChatRoomsListener,
-  joinRoom
+  searchChatRoomsListener
 } from '../services/message-service'
 
 export default {
@@ -36,16 +37,9 @@ export default {
       this.rooms = []
       searchForChatRooms(this.server)
       searchChatRoomsListener(this.server, (rooms) => {
-        console.log(rooms)
         this.rooms = rooms
       })
-    },
-    joinRoom (room) {
-      console.log(room)
-      joinRoom(room)
     }
-  },
-  created () {
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <div class="message-list">
       <md-list>
         <md-list-item v-for="(item, index) in messages" :key="index">
-          <span class="md-list-item-text">{{ item.message }}</span>
+          <span class="md-list-item-text" v-bind:class="{ 'mine-message': isMine(item) }">{{ item.message }}</span>
         </md-list-item> 
       </md-list>
     </div>
@@ -24,13 +24,17 @@ export default {
     return {
       newMessage: '',
       messages: [],
-      recipient: ''
+      recipient: '',
+      loggedInUser: 'test-gihhok@404.city'
     }
   },
   methods: {
     sendMessage () {
       sendPrivateMessage({ message: this.newMessage, to: this.recipient })
-      this.messages = [...this.messages, { from: 'test-gihhok@404.city', message: this.newMessage }]
+      this.messages = [...this.messages, { from: this.loggedInUser, message: this.newMessage }]
+    },
+    isMine (message) {
+      return message.from === this.loggedInUser
     }
   },
   created () {
@@ -63,5 +67,9 @@ form {
   display: inline-block;
   vertical-align: top;
   border: 1px solid rgba(#000, .12);
+}
+
+.mine-message {
+  color: blue;
 }
 </style>
