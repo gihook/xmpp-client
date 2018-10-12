@@ -6,25 +6,38 @@
         <span><b>{{ item.sender }}</b>: {{ item.message }}</span>
       </md-list-item> 
     </md-list>
+    <form @submit.prevent="sendMessage">
+      <md-field>
+        <md-textarea v-model="newMessage"></md-textarea>
+      </md-field>
+      <md-button type="submit">Send</md-button>
+    </form>
   </div>
 </template>
 
 <script>
-import { joinRoom, groupChatListener } from '../services/message-service'
+import { joinRoom, groupChatListener, sendGroupChatMessage } from '../services/message-service'
 
 export default {
   name: 'GroupChat',
   data () {
     return {
       messages: [],
-      subject: ''
+      subject: '',
+      newMessage: '',
+      address: ''
+    }
+  },
+  methods: {
+    sendMessage () {
+      sendGroupChatMessage({ message: this.newMessage, to: this.address })
     }
   },
   created () {
-    const address = this.$route.params.jid
-    const room = { address }
+    this.address = this.$route.params.jid
+    const room = { address: this.address }
     joinRoom(room)
-    groupChatListener(address, (message) => {
+    groupChatListener(this.address, (message) => {
       if (message.sender) {
         this.messages = [...this.messages, message]
       }

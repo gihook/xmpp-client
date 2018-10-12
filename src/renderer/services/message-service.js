@@ -6,6 +6,10 @@ export const sendPrivateMessage = (data) => {
   ipcRenderer.send('send-message', data)
 }
 
+export const sendGroupChatMessage = (data) => {
+  ipcRenderer.send('send-groupchat-message', data)
+}
+
 export const searchForChatRooms = (server) => {
   const eventKey = `iq:result:${server}`
   registerEventKey(eventKey)

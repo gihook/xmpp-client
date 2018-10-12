@@ -40,6 +40,15 @@ const mainFunction = function (mainWindow) {
     )
   })
 
+  ipcMain.on('send-groupchat-message', (_, data) => {
+    const { to, message } = data
+    client.send(
+      xml('message', { to, type: 'groupchat' },
+        xml('body', {}, message)
+      )
+    )
+  })
+
   ipcMain.on('search-chatrooms', (_, data) => {
     const server = data
     client.send(
@@ -50,12 +59,9 @@ const mainFunction = function (mainWindow) {
   })
 
   ipcMain.on('join-room', (_, data) => {
-    console.log('sending presence...')
     const { address } = data
     const xmlStanza = xml('presence', { to: address + '/test-gihhok1', id: 'room-id-nikola' })
-
     client.send(xmlStanza)
-    console.log(xmlStanza)
   })
 }
 
