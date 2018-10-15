@@ -36,6 +36,7 @@ export default {
     registerUser () {
       const credentials = { domain: this.domain, username: this.username, password: this.password }
       ipcRenderer.send('registerClient', credentials)
+      this.$store.commit('SET_LOGIN', this.username)
       this.$router.push('/menu')
     }
   }

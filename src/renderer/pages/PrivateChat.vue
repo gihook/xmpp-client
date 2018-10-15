@@ -24,8 +24,7 @@ export default {
     return {
       newMessage: '',
       messages: [],
-      recipient: '',
-      loggedInUser: 'test-gihhok@404.city'
+      recipient: ''
     }
   },
   methods: {
@@ -35,6 +34,11 @@ export default {
     },
     isMine (message) {
       return message.from === this.loggedInUser
+    }
+  },
+  computed: {
+    loggedInUser () {
+      return this.$store.state['Login'].username
     }
   },
   created () {
