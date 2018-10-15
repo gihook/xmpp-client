@@ -5,6 +5,9 @@
       <router-link tag="a" to="/">
         Go To Home
       </router-link>
+      <router-link v-if="loggedInUser" tag="a" to="/menu">
+        Go To MenuPage
+      </router-link>
     </div>
     <router-view></router-view>
   </div>
